@@ -120,8 +120,9 @@ const Header = () => {
       }, 2000);
     }).catch((err) => {
       console.log(err.response.data);
+      document.getElementById('failed-login').innerText = 'Login Failed: ' + err.response.data.message;
       setTimeout(() => {
-        document.getElementById('failed-login').innerText = 'Login Failed: ' + err.response.data.message;
+        document.getElementById('failed-login').innerText = null;
       }, 2000);
     })
   }
@@ -164,7 +165,10 @@ const Header = () => {
         .catch(err => {
           console.log(err.response.data);
           document.getElementById('failed-register').innerText = 'Registration Failed: ' + err.response.data.message;
-          setTimeout(() => closeModal(), 2000);
+          setTimeout(() => {
+              document.getElementById('failed-register').innerText = null;
+            }
+          , 2000);
         })
     }
   }
