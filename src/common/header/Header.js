@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 import Modal from "react-modal";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 const customStyles = {
   content: {
@@ -62,7 +63,8 @@ const Header = () => {
   const [lastname, setlastname] = useState(null);
   const [mobile, setmobile] = useState(null);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [accessToken, setaccessToken] = useState(null);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -75,6 +77,17 @@ const Header = () => {
   function closeModal() {
     setIsOpen(false);
   }
+
+  function handleLogout() {
+    setIsLogin(false);
+    const auth = "Bearer " + accessToken;
+    axios.post("http://localhost:8080/auth/logout", null,{headers: {'Authorization': auth}}
+    ).then((resp) => {
+      console.log("Log out Resp: ", resp);
+      setaccessToken(null);
+    }).catch((err) => {
+      console.log(err.response.data);
+    })  }
 
   function handleUserChange(e) {
     document.getElementById('username-valid').innerText = '';
@@ -94,14 +107,23 @@ const Header = () => {
       document.getElementById('username-valid').innerText = 'Enter Valid email';
       return;
     }
-    // if logged in
-    document.getElementById('success-login').innerText = 'Login Successful'
-    setTimeout(() => {
-      closeModal();
-      setIsLogin(true);
-    }, 2000);
-    // else
-    // show error
+
+    const auth = 'Basic ' + btoa(username+':'+password)
+    axios.post("http://localhost:8080/auth/login", null,{headers: {'Authorization': auth}}
+    ).then((resp) => {
+      console.log("Resp: ", resp);
+      setaccessToken(resp.data.accessToken);
+      document.getElementById('success-login').innerText = 'Login Successful'
+      setTimeout(() => {
+        closeModal();
+        setIsLogin(true);
+      }, 2000);
+    }).catch((err) => {
+      console.log(err.response.data);
+      setTimeout(() => {
+        document.getElementById('failed-login').innerText = 'Login Failed: ' + err.response.data.message;
+      }, 2000);
+    })
   }
 
   function handleFirstNameChange(e) {
@@ -126,9 +148,24 @@ const Header = () => {
       flag = false;
     }
     if (flag) {
-      //'/users/register
-      document.getElementById('success-register').innerText = 'Registration Successful'
-      setTimeout(() => closeModal(), 2000);
+      const data = {
+        'firstName': firstname,
+        'lastName': lastname,
+        'emailId': username,
+        'password': password,
+        'mobile': mobile,
+      }
+      axios.post("http://localhost:8080/users/register", data)
+        .then(resp => {
+          console.log(resp);
+          document.getElementById('success-register').innerText = 'Registration Successful';
+          setTimeout(() => closeModal(), 2000);
+        })
+        .catch(err => {
+          console.log(err.response.data);
+          document.getElementById('failed-register').innerText = 'Registration Failed: ' + err.response.data.message;
+          setTimeout(() => closeModal(), 2000);
+        })
     }
   }
 
@@ -149,7 +186,7 @@ const Header = () => {
         size="medium"
         onClick={() => {
           if (isLogin)
-            setIsLogin(false);
+            handleLogout();
           else
             openModal();
         }}
@@ -188,6 +225,7 @@ const Header = () => {
                 <br/>
                 <br/>
                 <span id="success-login" style={{'color': 'green'}}></span>
+                <span id="failed-login" style={{'color': 'red'}}></span>
               </form>
 
             </CardContent>
@@ -234,6 +272,7 @@ const Header = () => {
                 <br/>
                 <br/>
                 <span id="success-register" style={{'color': 'green'}}></span>
+                <span id="failed-register" style={{'color': 'red'}}></span>
               </form>
             </CardContent>
           </Card>
