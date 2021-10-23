@@ -102,7 +102,7 @@ const Header = () => {
   function submitLogin(event) {
     event.preventDefault();
     console.log(username, password);
-    const format = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*/;
+    const format = /^\w+([-]?\w+)*@\w+([-]?\w+)*/;
     if (!username.match(format)) {
       document.getElementById('username-valid').innerText = 'Enter Valid email';
       return;
@@ -142,7 +142,7 @@ const Header = () => {
       document.getElementById('mobile-valid').innerText = 'Enter Valid mobile number';
       flag = false;
     }
-    const format = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*/;
+    const format = /^\w+([-]?\w+)*@\w+([-]?\w+)*/;
     if (!username.match(format)) {
       document.getElementById('username-valid').innerText = 'Enter Valid email';
       flag = false;
@@ -211,7 +211,7 @@ const Header = () => {
                 <FormControl variant="standard" required>
                   <InputLabel htmlFor="username">Email</InputLabel>
                   <Input id="username" onChange={handleUserChange}/>
-                  <FormHelperText id="username-valid" style={{'color': 'red'}}></FormHelperText>
+                  <FormHelperText id="username-valid" style={{'color': 'red'}}/>
                 </FormControl>
                 <br/>
                 <br/>
@@ -224,8 +224,8 @@ const Header = () => {
                 <Button variant="contained" color="primary" size="medium" type="submit">Login</Button>
                 <br/>
                 <br/>
-                <span id="success-login" style={{'color': 'green'}}></span>
-                <span id="failed-login" style={{'color': 'red'}}></span>
+                <span id="success-login" style={{'color': 'green'}}/>
+                <span id="failed-login" style={{'color': 'red'}}/>
               </form>
 
             </CardContent>
@@ -251,7 +251,7 @@ const Header = () => {
                 <FormControl variant="standard" required>
                   <InputLabel htmlFor="email">Email</InputLabel>
                   <Input id="email" onChange={handleUserChange}/>
-                  <FormHelperText id="username-valid" style={{'color': 'red'}}></FormHelperText>
+                  <FormHelperText id="username-valid" style={{'color': 'red'}} />
                 </FormControl>
                 <br/>
                 <br/>
@@ -264,15 +264,15 @@ const Header = () => {
                 <FormControl variant="standard" required>
                   <InputLabel htmlFor="mobile">Mobile No.</InputLabel>
                   <Input id="mobile" type="number" onChange={handleNumberChange}/>
-                  <FormHelperText id="mobile-valid" style={{'color': 'red'}}></FormHelperText>
+                  <FormHelperText id="mobile-valid" style={{'color': 'red'}} />
                 </FormControl>
                 <br/>
                 <br/>
                 <Button variant="contained" color="primary" size="medium" type="submit">Register</Button>
                 <br/>
                 <br/>
-                <span id="success-register" style={{'color': 'green'}}></span>
-                <span id="failed-register" style={{'color': 'red'}}></span>
+                <span id="success-register" style={{'color': 'green'}} />
+                <span id="failed-register" style={{'color': 'red'}} />
               </form>
             </CardContent>
           </Card>
