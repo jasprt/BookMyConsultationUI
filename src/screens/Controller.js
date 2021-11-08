@@ -10,7 +10,7 @@ const Controller = () => {
         <Route
           exact
           path="/"
-          render={(props) => <Home {...props} baseUrl={baseUrl} />}
+          render={(props) => <Home {...props} baseUrl={baseUrl}/>}
         />
       </div>
     </Router>

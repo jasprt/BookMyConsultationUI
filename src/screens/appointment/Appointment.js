@@ -1,31 +1,9 @@
-import React, {useEffect, useState} from "react";
-import {Button, Card, CardActions, CardContent} from "@material-ui/core";
+import React from "react";
+import {Button, Card, CardContent} from "@material-ui/core";
 import RateAppointment from "./RateAppointment";
 
-const Appointment = () => {
-  const [appointments, setappointments] = useState([]);
-
-  useEffect(() => {
-    // call to API for appointment details
-    const res = [
-      {
-        id: '1',
-        doctor: 'Jaspreet Singh',
-        date: '2021-08-05',
-        symptoms: 'Fever',
-        history: 'AIDS'
-      },
-      {
-        id: '2',
-        doctor: 'Jaspreet Singh',
-        date: '2021-08-05',
-        symptoms: 'Fever',
-        history: 'AIDS'
-      }
-    ]
-    setappointments(res);
-  }, []);
-
+const Appointment = (props) => {
+  console.log('Appointments',props);
   function clickHandler(e){
     console.log(e);
     return (
@@ -35,25 +13,22 @@ const Appointment = () => {
 
   return (
     <div>
+      {props.appointmentsList.length === 0 && 'No Appointments Booked'}
       <Card sx={{minWidth: 275}}>
-        {
-          appointments.map(a => {
+        {props.appointmentsList.map(a => {
               return (
                 <Card style={{margin: '20px'}}>
-                  <CardContent key={a.id} id={a.id}>
-                    <h4>Dr: {a.doctor}</h4>
-                    <div>Date: {a.date}</div>
+                  <CardContent key={a.appointmentId} id={a.appointmentId}>
+                    <h4>Dr: {a.doctorName}</h4>
+                    <div>Date: {a.appointmentDate} {a.timeSlot}</div>
                     <div>Symptoms: {a.symptoms}</div>
-                    <div>Prior Medical History: {a.history}</div>
+                    <div>Prior Medical History: {a.priorMedicalHistory}</div>
                   </CardContent>
                   <CardContent>
                     <Button id={a.id} variant="contained" color="primary" size="medium" onClick={clickHandler}>Rate Appointment</Button>
                   </CardContent>
                 </Card>
-              )
-            }
-          )
-        }
+              )})}
       </Card>
     </div>
   );

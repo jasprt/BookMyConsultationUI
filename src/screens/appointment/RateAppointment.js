@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Modal} from "@material-ui/core";
+import Modal from "react-modal";
 
 const customStyles = {
   content: {
@@ -13,7 +13,7 @@ const customStyles = {
 };
 
 const RateAppointment = () => {
-  const [comment, setcomment] = useState('');
+  // const [comment, setcomment] = useState('');
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function closeModal() {
