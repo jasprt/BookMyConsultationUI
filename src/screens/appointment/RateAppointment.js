@@ -20,6 +20,8 @@ const RateAppointment = () => {
     setIsOpen(false);
   }
 
+  // TODO
+
   return (
     <div>
       <Modal

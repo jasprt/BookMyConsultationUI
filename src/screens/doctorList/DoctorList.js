@@ -3,6 +3,7 @@ import {Button, MenuItem, Paper, Select, Typography} from "@material-ui/core";
 import axios from "axios";
 import DoctorDetails from "./DoctorDetails";
 import BookAppointment from "./BookAppointment";
+import StarIcon from "@material-ui/icons/Star";
 
 const DoctorList = (props) => {
   const [selectedSpeciality, setSelectedSpeciality] = React.useState('');
@@ -35,6 +36,14 @@ const DoctorList = (props) => {
     setSelectedSpeciality(event.target.value);
   };
 
+  const ratings = (doc) => {
+    let stars = []
+    for (let i = 0; i < doc.rating; i++) {
+      stars.push(<StarIcon style={{color: 'gold'}}/>);
+    }
+    return stars;
+  }
+
   return (
     <div>
       <h4>Select Speciality</h4>
@@ -61,7 +70,9 @@ const DoctorList = (props) => {
                   <h3>Doctor Name: {doc.firstName} {doc.lastName}</h3>
                   <span style={{fontSize: '16px'}}>Speciality: {doc.speciality}</span>
                   <br/>
-                  <span style={{fontSize: '16px'}}>Rating: {doc.rating}</span>
+                  <span style={{fontSize: '16px'}}>Rating:</span>
+                    &nbsp;
+                    <span>{ratings(doc)}</span>
                   <br/>
                   <span style={{'width': '100%'}}>
                     <Button

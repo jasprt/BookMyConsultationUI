@@ -68,7 +68,7 @@ const BookAppointment = (props) => {
     const auth = "Bearer " + loginUser.accessToken;
     axios.post("http://localhost:8080/appointments", data, {headers: {'Authorization': auth}}
     ).then((resp) => {
-      if (resp.data.status === 200) {
+      if (resp.status === 200) {
         console.log("Booked appointment", resp.data);
         document.getElementById('booking-success').innerText = 'Appointment Booking Successful';
         setTimeout(() => {

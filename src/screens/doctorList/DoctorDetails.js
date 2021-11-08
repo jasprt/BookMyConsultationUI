@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {CardContent} from "@material-ui/core";
 import Modal from "react-modal";
+import StarIcon from '@material-ui/icons/Star';
 
 const customStyles = {
   content: {
@@ -26,7 +27,15 @@ const DoctorDetails = (props) => {
 
   useEffect(() => {
     setIsOpen(true);
-  }, [props])
+  }, [props]);
+
+  const ratings = () => {
+    let stars = []
+    for (let i = 0; i < props.rating; i++) {
+      stars.push(<StarIcon style={{color: 'gold'}}/>);
+    }
+    return stars;
+  }
 
   return (
     <Modal
@@ -45,7 +54,11 @@ const DoctorDetails = (props) => {
         <div>City: {props.address.city}</div>
         <div>Email: {props.emailId}</div>
         <div>Mobile: {props.mobile}</div>
-        <div>Rating: {props.rating}</div>
+        <div>
+          <span>Rating:</span>
+          &nbsp;
+          <span>{ratings()}</span>
+        </div>
       </CardContent>
     </Modal>
   );

@@ -85,7 +85,7 @@ const Home = (props) => {
     const auth = "Bearer " + userDetails.accessToken;
     axios.post("http://localhost:8080/auth/logout", null, {headers: {'Authorization': auth}}
     ).then((resp) => {
-      if (resp.data.status === 200)
+      if (resp.status === 200)
         setUserDetails(null);
     }).catch((err) => {
       console.log(err.response.data);
@@ -167,9 +167,10 @@ const Home = (props) => {
       }
       axios.post("http://localhost:8080/users/register", data)
         .then(resp => {
+          if (resp.status === 200) {
           document.getElementById('success-register').innerText = 'Registration Successful';
           setTimeout(() => closeModal(), 2000);
-        })
+        }})
         .catch(err => {
           console.log(err.response.data);
           document.getElementById('failed-register').innerText = 'Registration Failed: ' + err.response.data.message;
@@ -313,7 +314,11 @@ const Home = (props) => {
       </TabPanel>
 
       <TabPanel value={value} index={1}>
-        {!isLogin ? <span>Login to see appointments</span> : <Appointment appointmentsList={appointmentsList}/>}
+        {!isLogin ?
+          <div style={{textAlign: 'center'}}>
+          <span style={{fontSize: '20px'}}>Login to see appointments</span>
+        </div> :
+          <Appointment appointmentsList={appointmentsList}/>}
       </TabPanel>
     </div>
   );
