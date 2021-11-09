@@ -101,7 +101,7 @@ const BookAppointment = (props) => {
       style={customStyles}
     >
       <CardContent key={props.id} id={props.id}>
-        <div style={{background: 'purple', color: 'white', padding: '11px', height: '70px'}}>
+        <div style={{background: 'purple', color: 'white', padding: '11px', height: '70px', display: 'flex', alignItems: 'center'}}>
           <h3 style={{margin: '0px'}}>Book an Appointment</h3>
         </div>
         <br/>

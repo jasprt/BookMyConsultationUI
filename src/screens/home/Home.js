@@ -211,7 +211,7 @@ const Home = (props) => {
         })
       }
     }
-  }, [value]);
+  }, [isLogin, value]);
 
   return (
     <div className="main-home-container">
@@ -318,7 +318,7 @@ const Home = (props) => {
           <div style={{textAlign: 'center'}}>
           <span style={{fontSize: '20px'}}>Login to see appointments</span>
         </div> :
-          <Appointment appointmentsList={appointmentsList}/>}
+          <Appointment appointmentsList={appointmentsList} userDetails={userDetails}/>}
       </TabPanel>
     </div>
   );

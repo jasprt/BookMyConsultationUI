@@ -1,14 +1,22 @@
-import React from "react";
+import React, {useState} from "react";
 import {Button, Card, CardContent} from "@material-ui/core";
 import RateAppointment from "./RateAppointment";
 
 const Appointment = (props) => {
-  console.log('Appointments',props);
+  const [openRating, setOpenRating] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState({})
+
   function clickHandler(e){
-    console.log(e);
-    return (
-      <RateAppointment/>
-    )
+    const details = e.target.id.split('--');
+    setSelectedAppointment({
+      appointmentId: details[0],
+      doctorId: details[1],
+    })
+    setOpenRating(true);
+  }
+
+  function closeRating(e){
+    setOpenRating(false);
   }
 
   return (
@@ -25,11 +33,14 @@ const Appointment = (props) => {
                     <div>Prior Medical History: {a.priorMedicalHistory}</div>
                   </CardContent>
                   <CardContent>
-                    <Button id={a.id} variant="contained" color="primary" size="medium" onClick={clickHandler}>Rate Appointment</Button>
+                    <Button id={a.appointmentId+'--'+a.doctorId} variant="contained" color="primary" size="medium" onClick={clickHandler}>
+                      <span id={a.appointmentId+'--'+a.doctorId}>Rate Appointment</span>
+                      </Button>
                   </CardContent>
                 </Card>
               )})}
       </Card>
+      {openRating && <RateAppointment closeRating={closeRating} selectedAppointment={selectedAppointment} userDetails={props.userDetails}/>}
     </div>
   );
 }

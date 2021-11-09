@@ -43,7 +43,7 @@ const DoctorDetails = (props) => {
       onRequestClose={closeModal}
       style={customStyles}
     >
-      <div style={{background: 'purple', color: 'white', padding: '11px', height: '70px'}}>
+      <div style={{background: 'purple', color: 'white', padding: '11px', height: '70px', display: 'flex', alignItems: 'center'}}>
         <h3 style={{margin: '0px'}}>Doctor Details</h3>
       </div>
       <CardContent key={props.id} id={props.id}>
